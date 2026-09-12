@@ -1,0 +1,69 @@
+name: Publish npm package
+
+on:
+  push:
+    branches: [main]
+    paths: [package.json]
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Validate and pack without publishing
+        type: boolean
+        default: true
+        required: true
+      verify_trust:
+        description: Verify npm OIDC trust without publishing
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-publish-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+      - name: Install npm with trusted publishing support
+        run: npm install --global npm@11
+      - name: Verify npm trusted publishing
+        if: github.event_name == 'workflow_dispatch' && inputs.verify_trust
+        run: node .github/scripts/verify-npm-trust.mjs
+      - name: Check release version and registry
+        id: release
+        run: node .github/scripts/npm-release.mjs
+      - name: Install dependencies
+        if: steps.release.outputs.validate == 'true'
+        run: npm ci
+      - name: Validate package
+        if: steps.release.outputs.validate == 'true'
+        run: |
+          npm run type-check
+          npx --no-install vitest run
+          npm run build
+          npm pack --dry-run --json
+      - name: Dry run publication
+        if: env.DRY_RUN == 'true'
+        run: npm publish --dry-run --access public --tag "$DIST_TAG"
+        env:
+          DIST_TAG: ${{ steps.release.outputs.dist_tag }}
+      - name: Publish with npm trusted publishing
+        if: env.DRY_RUN != 'true' && steps.release.outputs.exists == 'false'
+        run: npm publish --provenance --access public --tag "$DIST_TAG"
+        env:
+          DIST_TAG: ${{ steps.release.outputs.dist_tag }}
