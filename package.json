@@ -1,66 +1,66 @@
 {
-  "name": "@khanglvm/mcpm",
-  "version": "1.2.0",
-  "description": "MCP Manager - Centralized MCP server configuration for AI agents",
-  "type": "module",
-  "bin": {
-    "mcpm": "dist/cli.js"
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsx src/cli.ts",
-    "type-check": "tsc --noEmit"
-  },
-  "keywords": [
-    "mcp",
-    "model-context-protocol",
-    "mcp-installer",
-    "mcp-config",
-    "mcp-manager",
-    "cli",
-    "ai-tools",
-    "ai-agents",
-    "claude-code",
-    "cursor",
-    "windsurf",
-    "antigravity",
-    "gemini-cli",
-    "vscode",
-    "zed",
-    "cline",
-    "roo-code",
-    "continue",
-    "codex",
-    "goose",
-    "opencode",
-    "github-copilot"
-  ],
-  "license": "MIT",
-  "dependencies": {
-    "@clack/prompts": "^1.0.0",
-    "@iarna/toml": "^2.2.5",
-    "@modelcontextprotocol/sdk": "^1.0.0",
-    "cross-keychain": "^1.1.0",
-    "gray-matter": "^4.0.3",
-    "js-yaml": "^4.1.0",
-    "picocolors": "^1.1.1"
-  },
-  "devDependencies": {
-    "@types/js-yaml": "^4.0.9",
-    "@types/node": "^22.10.0",
-    "tsup": "^8.3.5",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.2",
-    "vitest": "^4.0.18"
-  },
-  "engines": {
-    "node": ">=18"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/khanglvm/mcpm.git"
-  }
+    "name": "@khanglvm/mcpm",
+    "version": "1.2.0",
+    "description": "MCP Manager - Centralized MCP server configuration for AI agents",
+    "type": "module",
+    "bin": {
+        "mcpm": "dist/cli.js"
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsup",
+        "dev": "tsx src/cli.ts",
+        "type-check": "tsc --noEmit"
+    },
+    "keywords": [
+        "mcp",
+        "model-context-protocol",
+        "mcp-installer",
+        "mcp-config",
+        "mcp-manager",
+        "cli",
+        "ai-tools",
+        "ai-agents",
+        "claude-code",
+        "cursor",
+        "windsurf",
+        "antigravity",
+        "gemini-cli",
+        "vscode",
+        "zed",
+        "cline",
+        "roo-code",
+        "continue",
+        "codex",
+        "goose",
+        "opencode",
+        "github-copilot"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "@clack/prompts": "^1.0.0",
+        "@iarna/toml": "^2.2.5",
+        "@modelcontextprotocol/sdk": "^1.0.0",
+        "cross-keychain": "^1.1.0",
+        "gray-matter": "^4.0.3",
+        "js-yaml": "^4.1.0",
+        "picocolors": "^1.1.1"
+    },
+    "devDependencies": {
+        "@types/js-yaml": "^4.0.9",
+        "@types/node": "^22.10.0",
+        "tsup": "^8.3.5",
+        "tsx": "^4.19.2",
+        "typescript": "^5.7.2",
+        "vitest": "^4.0.18"
+    },
+    "engines": {
+        "node": ">=18"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/khanglvm/mcpm.git"
+    }
 }

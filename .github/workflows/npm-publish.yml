@@ -57,11 +57,6 @@ jobs:
           npx --no-install vitest run
           npm run build
           npm pack --dry-run --json
-      - name: Dry run publication
-        if: env.DRY_RUN == 'true'
-        run: npm publish --dry-run --access public --tag "$DIST_TAG"
-        env:
-          DIST_TAG: ${{ steps.release.outputs.dist_tag }}
       - name: Publish with npm trusted publishing
         if: env.DRY_RUN != 'true' && steps.release.outputs.exists == 'false'
         run: npm publish --provenance --access public --tag "$DIST_TAG"
