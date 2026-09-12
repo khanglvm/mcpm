@@ -35,6 +35,8 @@ jobs:
       DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -58,7 +60,7 @@ jobs:
           npm run build
           npm pack --dry-run --json
       - name: Publish with npm trusted publishing
-        if: env.DRY_RUN != 'true' && steps.release.outputs.exists == 'false'
+        if: env.DRY_RUN != 'true' && steps.release.outputs.publish == 'true'
         run: npm publish --provenance --access public --tag "$DIST_TAG"
         env:
           DIST_TAG: ${{ steps.release.outputs.dist_tag }}
